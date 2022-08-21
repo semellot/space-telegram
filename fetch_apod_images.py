@@ -1,4 +1,5 @@
 import argparse
+from dotenv import load_dotenv
 import requests
 
 from image_manipulation import *
@@ -12,17 +13,19 @@ if __name__ == '__main__':
     count = received_args.count
     if not count:
         count = 1
+
+    load_dotenv()
     params = {
-        'api_key': 'K87Qp0hdauZRImQp8U4phTGq2MZu52YLBLGSc5bb',
+        "api_key": os.environ['NASA_KEY'],
         'count': count
     }
+
     url = 'https://api.nasa.gov/planetary/apod'
     response = requests.get(url, params=params)
     response.raise_for_status()
 
     decoded_response = response.json()
     for link_number, link in enumerate(decoded_response):
-        print(link['url'])
         extention = get_extention(link['url'])
         filename = f'nasa_apod_{link_number}.{extention}'
         save_image(link['url'], filename)

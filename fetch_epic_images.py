@@ -1,12 +1,13 @@
-import argparse
+from dotenv import load_dotenv
 import requests
 
 from image_manipulation import *
 
 
 if __name__ == '__main__':
+    load_dotenv()
     params = {
-        "api_key": "K87Qp0hdauZRImQp8U4phTGq2MZu52YLBLGSc5bb"
+        "api_key": os.environ['NASA_KEY']
     }
     url = 'https://api.nasa.gov/EPIC/api/natural/all'
     response = requests.get(url, params=params)

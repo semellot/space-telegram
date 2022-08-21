@@ -1,3 +1,4 @@
+from dotenv import load_dotenv
 import os
 import requests
 
@@ -6,8 +7,9 @@ from urllib.parse import urlparse
 
 
 def save_image(url, filename):
+    load_dotenv()
     params = {
-        "api_key": "K87Qp0hdauZRImQp8U4phTGq2MZu52YLBLGSc5bb"
+        "api_key": os.environ['NASA_KEY']
     }
     response = requests.get(url, params=params)
     response.raise_for_status()
