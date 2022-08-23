@@ -1,22 +1,23 @@
 import argparse
 from dotenv import load_dotenv
+import os
 import requests
 
-from image_manipulation import *
+from image_manipulation import save_image, get_extention
 
 
 if __name__ == '__main__':
+    load_dotenv()
+    api_key = os.environ['NASA_KEY']
+
     parser = argparse.ArgumentParser()
-    parser.add_argument('count', help='Количество изображений', nargs='?')
+    parser.add_argument('count', help='Количество изображений', nargs='?', const=1)
     received_args = parser.parse_args()
 
     count = received_args.count
-    if not count:
-        count = 1
 
-    load_dotenv()
     params = {
-        "api_key": os.environ['NASA_KEY'],
+        "api_key": api_key,
         'count': count
     }
 
@@ -26,6 +27,9 @@ if __name__ == '__main__':
 
     decoded_response = response.json()
     for link_number, link in enumerate(decoded_response):
+        if 'url' not in link:
+            continue
         extention = get_extention(link['url'])
-        filename = f'nasa_apod_{link_number}.{extention}'
-        save_image(link['url'], filename)
+        if extention in [".jpg", ".png", ".gif"]:
+            filename = f'nasa_apod_{link_number}{extention}'
+            save_image(link['url'], filename)

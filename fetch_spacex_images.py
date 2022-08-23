@@ -1,7 +1,7 @@
 import argparse
 import requests
 
-from image_manipulation import *
+from image_manipulation import save_image, get_extention
 
 
 if __name__ == '__main__':
@@ -17,15 +17,16 @@ if __name__ == '__main__':
         decoded_response = response.json()
         for launch in decoded_response:
             if launch['links']['flickr']['original']:
-                launch_id = launch['id']
+                links = launch['links']['flickr']['original']
                 break
-    url = f'https://api.spacexdata.com/v5/launches/{launch_id}'
-    response = requests.get(url)
-    response.raise_for_status()
+    else:
+        url = f'https://api.spacexdata.com/v5/launches/{launch_id}'
+        response = requests.get(url)
+        response.raise_for_status()
+        decoded_response = response.json()
+        links = decoded_response['links']['flickr']['original']
 
-    decoded_response = response.json()
-    links = decoded_response['links']['flickr']['original']
     for link_number, link in enumerate(links):
         extention = get_extention(link)
-        filename = f'spacex_{link_number}.{extention}'
+        filename = f'spacex_{link_number}{extention}'
         save_image(link, filename)

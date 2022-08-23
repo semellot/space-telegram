@@ -1,15 +1,18 @@
 import argparse
-from dotenv import load_dotenv
 import os
 import random
 import time
 
+from dotenv import load_dotenv
+from requests.exceptions import ConnectionError
 import telegram
 
 
 if __name__ == "__main__":
     load_dotenv()
     token = os.environ['BOT_TOKEN']
+    chat_id = os.environ['CHAT_ID']
+
     bot = telegram.Bot(token=token)
 
     for files in os.walk('images'):
@@ -22,12 +25,14 @@ if __name__ == "__main__":
 
     if received_args.period:
         period = int(received_args.period)
-        print(period)
     else:
         period = int(os.environ['PERIOD'])
-        print(period)
 
     while True:
         for image in images:
-            bot.send_photo(chat_id="@epic_space", photo=open(f'images/{image}', 'rb'))
-            time.sleep(period)
+            with open(os.path.join('images', image), 'rb') as file:
+                try:
+                    bot.send_photo(chat_id=chat_id, photo=file)
+                    time.sleep(period)
+                except telegram.error.TelegramError:
+                    time.sleep(360)
