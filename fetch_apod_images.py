@@ -11,7 +11,7 @@ if __name__ == '__main__':
     api_key = os.environ['NASA_KEY']
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('count', help='Количество изображений', nargs='?', const=1)
+    parser.add_argument('count', help='Количество изображений', nargs='?', default=1)
     received_args = parser.parse_args()
 
     count = received_args.count
@@ -29,7 +29,7 @@ if __name__ == '__main__':
     for link_number, link in enumerate(decoded_response):
         if 'url' not in link:
             continue
-        extension = get_extension(link['url'])
-        if extension in [".jpg", ".png", ".gif"]:
+        if any(ext in link['url'] for ext in [".jpg", ".png", ".gif"]):
+            extension = get_extension(link['url'])
             filename = f'nasa_apod_{link_number}{extension}'
             save_image(link['url'], filename)
