@@ -16,8 +16,8 @@ if __name__ == '__main__':
         response.raise_for_status()
         decoded_response = response.json()
         for launch in decoded_response:
-            if launch['links']['flickr']['original']:
-                links = launch['links']['flickr']['original']
+            links = launch['links']['flickr']['original']
+            if links:
                 break
     else:
         url = f'https://api.spacexdata.com/v5/launches/{launch_id}'
