@@ -19,14 +19,12 @@ if __name__ == "__main__":
         images = files[2]
     random.shuffle(images)
 
+    period = int(os.environ['PERIOD'])
     parser = argparse.ArgumentParser()
-    parser.add_argument('period', help='Период публикации (в секундах)', nargs='?')
+    parser.add_argument('period', help='Период публикации (в секундах)', nargs='?', default=period)
     received_args = parser.parse_args()
 
-    if received_args.period:
-        period = int(received_args.period)
-    else:
-        period = int(os.environ['PERIOD'])
+    period = received_args.period
 
     while True:
         for image in images:
