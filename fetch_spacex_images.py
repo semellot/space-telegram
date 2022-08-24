@@ -1,7 +1,7 @@
 import argparse
 import requests
 
-from image_manipulation import save_image, get_extention
+from image_manipulation import save_image, get_extension
 
 
 if __name__ == '__main__':
@@ -27,6 +27,6 @@ if __name__ == '__main__':
         links = decoded_response['links']['flickr']['original']
 
     for link_number, link in enumerate(links):
-        extention = get_extention(link)
-        filename = f'spacex_{link_number}{extention}'
+        extension = get_extension(link)
+        filename = f'spacex_{link_number}{extension}'
         save_image(link, filename)

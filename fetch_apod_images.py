@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 import os
 import requests
 
-from image_manipulation import save_image, get_extention
+from image_manipulation import save_image, get_extension
 
 
 if __name__ == '__main__':
@@ -29,7 +29,7 @@ if __name__ == '__main__':
     for link_number, link in enumerate(decoded_response):
         if 'url' not in link:
             continue
-        extention = get_extention(link['url'])
-        if extention in [".jpg", ".png", ".gif"]:
-            filename = f'nasa_apod_{link_number}{extention}'
+        extension = get_extension(link['url'])
+        if extension in [".jpg", ".png", ".gif"]:
+            filename = f'nasa_apod_{link_number}{extension}'
             save_image(link['url'], filename)
