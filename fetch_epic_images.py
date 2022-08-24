@@ -1,4 +1,5 @@
 from dotenv import load_dotenv
+from datetime import datetime
 import os
 import requests
 
@@ -22,8 +23,10 @@ if __name__ == '__main__':
     response.raise_for_status()
     decoded_response = response.json()
 
-    split_date = last_date.split('-')
-    year, month, day = split_date
+    date = datetime.fromisoformat(last_date)
+    year = date.strftime("%Y")
+    month = date.strftime("%m")
+    day = date.strftime("%d")
     for link_number, link in enumerate(decoded_response):
         filename = f'nasa_epic_{link_number}.png'
         last_name_image = link["image"]
