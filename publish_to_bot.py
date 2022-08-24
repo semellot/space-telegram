@@ -10,8 +10,8 @@ import telegram
 
 if __name__ == "__main__":
     load_dotenv()
-    token = os.environ['BOT_TOKEN']
-    chat_id = os.environ['CHAT_ID']
+    token = os.environ['TG_BOT_TOKEN']
+    chat_id = os.environ['TG_CHAT_ID']
 
     bot = telegram.Bot(token=token)
 
