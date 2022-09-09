@@ -29,7 +29,8 @@ if __name__ == '__main__':
     for link_number, link in enumerate(decoded_response):
         if 'url' not in link:
             continue
-        if any(ext in link['url'] for ext in [".jpg", ".png", ".gif"]):
+        extensions = ('.jpg', '.png', '.gif')
+        if link['url'].endswith(extensions):
             extension = get_extension(link['url'])
             filename = f'nasa_apod_{link_number}{extension}'
             save_image(link['url'], filename)
