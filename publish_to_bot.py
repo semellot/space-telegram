@@ -15,15 +15,15 @@ if __name__ == "__main__":
 
     bot = telegram.Bot(token=token)
 
-    for files in os.walk('images'):
-        images = files[2]
+    images = []
+    for image in os.listdir('images'):
+        images.append(image)
     random.shuffle(images)
 
-    period = int(os.environ['PERIOD'])
+    default_period = int(os.getenv('PERIOD', 14400))
     parser = argparse.ArgumentParser()
-    parser.add_argument('period', help='Период публикации (в секундах)', nargs='?', default=period)
+    parser.add_argument('period', help='Период публикации (в секундах)', nargs='?', default=default_period, type=int)
     received_args = parser.parse_args()
-
     period = received_args.period
 
     while True:
