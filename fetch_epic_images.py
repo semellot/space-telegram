@@ -24,11 +24,9 @@ if __name__ == '__main__':
     decoded_response = response.json()
 
     date = datetime.fromisoformat(last_date)
-    year = date.strftime("%Y")
-    month = date.strftime("%m")
-    day = date.strftime("%d")
+    full_date = date.strftime("%Y/%m/%d")
     for link_number, link in enumerate(decoded_response):
         filename = f'nasa_epic_{link_number}.png'
         last_name_image = link["image"]
-        url_image = f'https://api.nasa.gov/EPIC/archive/natural/{year}/{month}/{day}/png/{last_name_image}.png'
+        url_image = f'https://api.nasa.gov/EPIC/archive/natural/{full_date}/png/{last_name_image}.png'
         save_image(url_image, filename, api_key)
