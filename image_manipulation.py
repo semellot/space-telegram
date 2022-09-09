@@ -19,6 +19,6 @@ def save_image(url, filename, api_key=''):
 
 def get_extension(url):
     parsed_url = urlparse(url)
-    splited_path = os.path.splitext(parsed_url.path)
-    extension = splited_path[-1]
+    splitted_path = os.path.splitext(parsed_url.path)
+    extension = splitted_path[-1]
     return extension
